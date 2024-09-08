@@ -2,25 +2,26 @@ version: '3'
 
 services:
   mysql:
-    image: mysql:5.7
+    image: mysql:9.0.1
     container_name: mysql
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: orders
       MYSQL_PASSWORD: root
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - .docker/mysql:/var/lib/mysql
 
   rabbitmq:
-    image: rabbitmq:3-management
+    image: rabbitmq:3.8.16-management
     container_name: rabbitmq
-    restart: always
+    hostname: rabbitmq
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672" # porta de comunicação com o rabbitmq
+      - "15672:15672"
+      - "15692:15692" #navegação na administração do rabbitmq
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_DEFAULT_VHOST=/
