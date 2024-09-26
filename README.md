@@ -29,15 +29,21 @@ grpcurl -plaintext localhost:50051 list pb.OrderService
 ```
 
 ### Criando uma compra
-```bash
+```shell
 grpcurl -plaintext -d @ localhost:50051 pb.OrderService/CreateOrder <<EOM
 {
-    "id":"zuk",
+    "id":"zuk669",
     "price": 166.6,
     "tax": 1.3
 }
 EOM
 ```
+
+### Listando compras
+```shell
+grpcurl -plaintext localhost:50051 pb.OrderService/ListOrder
+```
+
 
 ## Testando GraphQL na Interface web
 
@@ -56,3 +62,8 @@ mutation createOrder {
 ## RabbitMQ
 - Criar fila `orders`
 - Criar bind `orders` com o `amq.direct`
+
+## Gerando arquivos Proto
+```shell
+protoc --go_out=. --go-grpc_out=.  internal/infra/grpc/protofiles/order.proto
+```

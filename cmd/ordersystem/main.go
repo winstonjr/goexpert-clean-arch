@@ -3,6 +3,8 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/devfullcycle/20-CleanArch/internal/infra/grpc/pb"
+	"github.com/devfullcycle/20-CleanArch/internal/infra/grpc/service"
 	"net"
 	"net/http"
 
@@ -11,8 +13,6 @@ import (
 	"github.com/devfullcycle/20-CleanArch/configs"
 	"github.com/devfullcycle/20-CleanArch/internal/event/handler"
 	"github.com/devfullcycle/20-CleanArch/internal/infra/graph"
-	"github.com/devfullcycle/20-CleanArch/internal/infra/grpc/pb"
-	"github.com/devfullcycle/20-CleanArch/internal/infra/grpc/service"
 	"github.com/devfullcycle/20-CleanArch/internal/infra/web/webserver"
 	"github.com/devfullcycle/20-CleanArch/pkg/events"
 	"github.com/streadway/amqp"
@@ -43,6 +43,7 @@ func main() {
 	})
 
 	createOrderUseCase := NewCreateOrderUseCase(db, eventDispatcher)
+	listOrderUseCase := NewListOrderUseCase(db)
 
 	ws := webserver.NewWebServer(configs.WebServerPort)
 	webOrderHandler := NewWebOrderHandler(db, eventDispatcher)
@@ -52,7 +53,7 @@ func main() {
 	go ws.Start()
 
 	grpcServer := grpc.NewServer()
-	createOrderService := service.NewOrderService(*createOrderUseCase)
+	createOrderService := service.NewOrderService(*createOrderUseCase, *listOrderUseCase)
 	pb.RegisterOrderServiceServer(grpcServer, createOrderService)
 	reflection.Register(grpcServer)
 

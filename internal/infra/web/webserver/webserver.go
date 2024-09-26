@@ -1,7 +1,6 @@
 package webserver
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -39,13 +38,10 @@ func (s *WebServer) Start() {
 	s.Router.Use(middleware.Logger)
 	for _, handler := range s.Handlers {
 		if handler.Method == http.MethodGet {
-			log.Println(handler.Path, handler.Method, "GET")
 			s.Router.Get(handler.Path, handler.RouteHandler)
 		} else if handler.Method == http.MethodPost {
-			log.Println(handler.Path, handler.Method, "POST")
 			s.Router.Post(handler.Path, handler.RouteHandler)
 		} else {
-			log.Println(handler.Path, handler.Method, "GENÉRICO")
 			s.Router.Handle(handler.Path, handler.RouteHandler)
 		}
 	}
