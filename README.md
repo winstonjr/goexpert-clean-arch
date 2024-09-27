@@ -47,13 +47,25 @@ grpcurl -plaintext localhost:50051 pb.OrderService/ListOrder
 
 ## Testando GraphQL na Interface web
 
-### Cadastrar produtos
+### Cadastrar orders
 ```graphql
 mutation createOrder {
   createOrder(input: {id:"c", Price: 99, Tax: 1.6}) {
     id,
     Price,
     Tax,
+    FinalPrice
+  }
+}
+```
+
+### listar orders
+```graphql
+query orders {
+  orders {
+    id
+    Price
+    Tax
     FinalPrice
   }
 }
@@ -66,4 +78,18 @@ mutation createOrder {
 ## Gerando arquivos Proto
 ```shell
 protoc --go_out=. --go-grpc_out=.  internal/infra/grpc/protofiles/order.proto
+```
+
+## Atualizando os arquivos graphql
+
+### instalando o gqlgen
+```shell
+go get -d github.com/99designs/gqlgen
+```
+
+### atualizando com o novo schema
+- Na mesma pasta que o arquivo `gqlgen.yml` 
+
+```shell
+go run github.com/99designs/gqlgen generate
 ```
