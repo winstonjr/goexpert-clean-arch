@@ -3,11 +3,7 @@
 ## executar sistema
 
 - rodar o docker para subir as dependências de infraestrutura `docker compose up --detach`
-- Conectar no banco de dados e rodar os seguintes scripts:
-```sql
-CREATE DATABASE IF NOT EXISTS orders;
-```
-
+- Conectar no banco de dados e rodar o seguinte script:
 ```sql
 CREATE TABLE orders (
     id varchar(255) NOT NULL,
@@ -25,6 +21,8 @@ CREATE TABLE orders (
 - API HTTP: `:8000`
 - API GRPC: `:50051`
 - API GRAPHQL: `:8080`
+- MySQL: `:3306`
+- RabbitMQ Admin: `:15672`
 
 ## Testando GRPC com GRPCurl
 
