@@ -21,6 +21,11 @@ CREATE TABLE orders (
 - Entrar no diretório `cmd/ordersystem`
 - Executar usando o comanto `go run main.go wire_gen.go`
 
+## Portas dos Serviços
+- API HTTP: `:8000`
+- API GRPC: `:50051`
+- API GRAPHQL: `:8080`
+
 ## Testando GRPC com GRPCurl
 
 ### listando os métodos do servidor
