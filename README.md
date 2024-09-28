@@ -3,7 +3,11 @@
 ## executar sistema
 
 - rodar o docker para subir as dependências de infraestrutura `docker compose up --detach`
-- Conectar no banco de dados e rodar o seguinte script:
+- Conectar no banco de dados e rodar os seguintes scripts:
+```sql
+CREATE DATABASE IF NOT EXISTS orders;
+```
+
 ```sql
 CREATE TABLE orders (
     id varchar(255) NOT NULL,
