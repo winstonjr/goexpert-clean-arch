@@ -1,9 +1,10 @@
-version: '3'
+# even with healthcheck, depends_on and a shared network my API cannont connect to rabbitmq. Can you help me?
 
 services:
   mysql:
     image: mysql:9.0.1
     container_name: mysql
+    hostname: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: orders
@@ -12,7 +13,13 @@ services:
       - "3306:3306"
     volumes:
       - .docker/mysql:/var/lib/mysql
-
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - my-network
   rabbitmq:
     image: rabbitmq:3.8.16-management
     container_name: rabbitmq
@@ -25,3 +32,30 @@ services:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_DEFAULT_VHOST=/
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - my-network
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+      - "50051:50051"
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - my-network
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      DB_HOST: mysql
+
+networks:
+  my-network:
+    driver: bridge

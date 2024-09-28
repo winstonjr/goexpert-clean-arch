@@ -32,8 +32,8 @@ grpcurl -plaintext localhost:50051 list pb.OrderService
 ```shell
 grpcurl -plaintext -d @ localhost:50051 pb.OrderService/CreateOrder <<EOM
 {
-    "id":"zuk669",
-    "price": 166.6,
+    "id":"xablau2",
+    "price": 69.6,
     "tax": 1.3
 }
 EOM
@@ -46,6 +46,8 @@ grpcurl -plaintext localhost:50051 pb.OrderService/ListOrder
 
 
 ## Testando GraphQL na Interface web
+
+http://localhost:8080/
 
 ### Cadastrar orders
 ```graphql

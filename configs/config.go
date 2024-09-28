@@ -2,7 +2,7 @@ package configs
 
 import "github.com/spf13/viper"
 
-type conf struct {
+type Conf struct {
 	DBDriver          string `mapstructure:"DB_DRIVER"`
 	DBHost            string `mapstructure:"DB_HOST"`
 	DBPort            string `mapstructure:"DB_PORT"`
@@ -12,10 +12,14 @@ type conf struct {
 	WebServerPort     string `mapstructure:"WEB_SERVER_PORT"`
 	GRPCServerPort    string `mapstructure:"GRPC_SERVER_PORT"`
 	GraphQLServerPort string `mapstructure:"GRAPHQL_SERVER_PORT"`
+	RabbitMQHost      string `mapstructure:"RABBITMQ_HOST"`
+	RabbitMQPort      string `mapstructure:"RABBITMQ_PORT"`
+	RabbitMQUser      string `mapstructure:"RABBITMQ_USER"`
+	RabbitMQPassword  string `mapstructure:"RABBITMQ_PASSWORD"`
 }
 
-func LoadConfig(path string) (*conf, error) {
-	var cfg *conf
+func LoadConfig(path string) (*Conf, error) {
+	var cfg *Conf
 	viper.SetConfigName("app_config")
 	viper.SetConfigType("env")
 	viper.AddConfigPath(path)
