@@ -90,6 +90,7 @@ query orders {
 ## RabbitMQ
 - Criar fila `orders`
 - Criar bind `orders` com o `amq.direct`
+- https://stackoverflow.com/questions/58266688/how-to-create-a-queue-in-rabbitmq-upon-startup
 
 ## Gerando arquivos Proto
 ```shell
