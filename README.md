@@ -1,7 +1,14 @@
-# goexpert-clean-arch
+cd # goexpert-clean-arch
 
-## executar sistema
+## executar o sistema no modo produção
+- rodar o docker para subir as dependências de infraestrutura `docker compose up --detach`
+- Portas disponíveis:
+  - API HTTP: `:8000`
+  - API GRPC: `:50051`
+  - API GRAPHQL: `:8080`
 
+## executar sistema no modo desenvolimento
+- comentar no `docker-compose.yaml` o item `api`
 - rodar o docker para subir as dependências de infraestrutura `docker compose up --detach`
 - Conectar no banco de dados e rodar o seguinte script:
 ```sql
@@ -90,6 +97,9 @@ protoc --go_out=. --go-grpc_out=.  internal/infra/grpc/protofiles/order.proto
 ```
 
 ## Atualizando os arquivos graphql
+```shell
+go run github.com/99designs/gqlgen generate
+```
 
 ### instalando o gqlgen
 ```shell

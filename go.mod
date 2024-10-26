@@ -1,4 +1,4 @@
-module github.com/devfullcycle/20-CleanArch
+module github.com/winstonjr/goexpert-clean-arch
 
 go 1.22.5
 
@@ -9,13 +9,15 @@ require (
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/google/wire v0.5.0
-	github.com/mattn/go-sqlite3 v1.14.16
+	github.com/mattn/go-sqlite3 v1.14.22
 	github.com/spf13/viper v1.14.0
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.9.0
 	github.com/vektah/gqlparser/v2 v2.5.16
 	google.golang.org/grpc v1.50.1
 	google.golang.org/protobuf v1.34.2
+	gorm.io/driver/sqlite v1.5.6
+	gorm.io/gorm v1.25.12
 )
 
 require (
@@ -28,6 +30,8 @@ require (
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
