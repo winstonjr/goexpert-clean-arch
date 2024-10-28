@@ -46,7 +46,7 @@ grpcurl -plaintext localhost:50051 list pb.OrderService
 ```shell
 grpcurl -plaintext -d @ localhost:50051 pb.OrderService/CreateOrder <<EOM
 {
-    "id":"xablau2",
+    "id":"xablau3",
     "price": 69.6,
     "tax": 1.3
 }

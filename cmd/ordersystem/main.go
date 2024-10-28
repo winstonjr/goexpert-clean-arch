@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	graphql_handler "github.com/99designs/gqlgen/graphql/handler"
+	graphqlHandler "github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/streadway/amqp"
 	"github.com/winstonjr/goexpert-clean-arch/configs"
@@ -28,7 +28,8 @@ func main() {
 		panic(err)
 	}
 
-	db, err := sql.Open(conf.DBDriver, fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", conf.DBUser, conf.DBPassword, conf.DBHost, conf.DBPort, conf.DBName))
+	db, err := sql.Open(conf.DBDriver, fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
+		conf.DBUser, conf.DBPassword, conf.DBHost, conf.DBPort, conf.DBName))
 	if err != nil {
 		panic(err)
 	}
@@ -37,9 +38,12 @@ func main() {
 	rabbitMQChannel := getRabbitMQChannel(conf)
 
 	eventDispatcher := events.NewEventDispatcher()
-	eventDispatcher.Register("OrderCreated", &handler.OrderCreatedHandler{
+	err = eventDispatcher.Register("OrderCreated", &handler.OrderCreatedHandler{
 		RabbitMQChannel: rabbitMQChannel,
 	})
+	if err != nil {
+		panic(err)
+	}
 
 	createOrderUseCase := NewCreateOrderUseCase(db, eventDispatcher)
 	listOrderUseCase := NewListOrderUseCase(db)
@@ -63,7 +67,7 @@ func main() {
 	}
 	go grpcServer.Serve(lis)
 
-	srv := graphql_handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{
+	srv := graphqlHandler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{
 		CreateOrderUseCase: *createOrderUseCase,
 		ListOrderUseCase:   *listOrderUseCase,
 	}}))
